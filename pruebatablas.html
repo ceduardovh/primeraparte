@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio - Solicitudes</title>
+    <link rel="icon" href="icono.jpg" type="image/jpeg">
+
+    <!-- Incluir Google Fonts para íconos -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Incluir Google Fonts para una fuente más moderna -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f5f5f5; /* Fondo claro */
+        }
+
+        /* Barra amarilla superior */
+        .top-bar {
+            width: 100%;
+            height: 60px;
+            background-color: #FFFF00;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            justify-content: space-between;
+        }
+
+        /* Logo */
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .logo-container img {
+            width: 157.82px;
+            height: 68.22px;
+        }
+
+        /* Barra de búsqueda moderna */
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            border-radius: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 5px 15px;
+            width: 300px;
+            transition: box-shadow 0.3s, border-color 0.3s;
+        }
+
+        .search-bar input {
+            border: none;
+            outline: none;
+            width: 100%;
+            padding: 10px;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .search-bar input::placeholder {
+            color: #999;
+        }
+
+        .search-bar:focus-within {
+            box-shadow: 0 4px 8px rgba(128, 0, 128, 0.4);
+            border: 2px solid #800080;
+        }
+
+        /* Ícono en la barra de búsqueda */
+        .search-bar i {
+            color: #999;
+            margin-right: 10px;
+        }
+
+        /* Información del usuario en la esquina derecha */
+        .user-info {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            color: #333;
+            max-width: 300px;
+            text-align: right;
+            overflow: hidden;
+            margin-left: auto;
+            margin-top: 5px;
+            padding-right: 40px;
+        }
+
+        .user-info div {
+            line-height: 1.2;
+        }
+
+        .user-info .position {
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+            margin: 0;
+        }
+
+        .user-info .name {
+            font-size: 14px;
+            font-weight: normal;
+            color: #777;
+            margin: 0;
+        }
+
+        .user-info .email {
+            font-size: 12px;
+            font-weight: normal;
+            color: #555;
+            margin: 0;
+        }
+
+        /* Estilo del ícono de usuario */
+        .user-icon {
+            margin-left: 10px;
+            color: #333;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #FFFF00;
+            overflow: hidden;
+            border: 2px solid #333;
+        }
+
+        .user-icon svg {
+            width: 70%;
+            height: 70%;
+        }
+
+        /* Contenedor para la barra de búsqueda y el botón de nueva solicitud */
+        .actions-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 90%;
+            margin: 100px auto 20px; /* Ajuste del margen superior para evitar la barra fija */
+        }
+
+        /* Barra gris vertical */
+        .vertical-bar {
+            width: 2px;
+            height: 30px;
+            background-color: #888;
+            margin: 0 10px;
+        }
+
+        /* Botón Nueva Solicitud */
+        .new-request-btn {
+            display: flex;
+            align-items: center;
+            background-color: #800080;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .new-request-btn i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        .new-request-btn:hover {
+            background-color: #6b006b;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Estilos para la tabla */
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            border-spacing: 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: white;
+        }
+
+        th, td {
+            padding: 20px;
+            text-align: left;
+            font-size: 14px;
+            color: #555;
+        }
+
+        th {
+            background-color: #800080;
+            color: white;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        tr {
+            border-bottom: 1px solid #ddd;
+            position: relative;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+            cursor: pointer;
+        }
+
+        td {
+            font-weight: 300;
+            border-bottom: 1px solid #eee;
+        }
+
+        /* Estilo del estado refinado */
+        .status-green {
+            color: #27AE60;
+            font-weight: bold;
+        }
+
+        .status-red {
+            color: #E74C3C;
+            font-weight: bold;
+        }
+
+        .status-yellow {
+            color: #F39C12;
+            font-weight: bold;
+        }
+
+        /* Mejora de la paginación */
+        /* Paginación */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .pagination button {
+            margin: 0 5px;
+            padding: 10px 15px;
+            background-color: #800080;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        .pagination button:hover {
+            background-color: #6b006b;
+        }
+
+        .pagination button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .modal-content {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra superior amarilla -->
+    <div class="top-bar">
+        <!-- Sección del logo -->
+        <div class="logo-container">
+            <img src="logo2.png" alt="Logo" class="logo">
+        </div>
+
+        <!-- Información del usuario en la esquina derecha -->
+        <div class="user-info">
+            <div>
+                <p class="position">Analista de TI</p>
+                <p class="name">Eduardo Hernandez</p>
+                <p class="email">eduardo.hdz@performer.com</p>
+            </div>
+            <div class="vertical-bar"></div>
+            <div class="user-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenedor para barra de búsqueda y botón -->
+    <div class="actions-container">
+        <!-- Botón Nueva Solicitud -->
+        <button class="new-request-btn">
+            <i class="material-icons">add_circle_outline</i>
+            Nueva Solicitud
+        </button>
+
+        <!-- Barra de búsqueda -->
+        <div class="search-bar">
+            <i class="material-icons">search</i>
+            <input type="text" id="searchInput" placeholder="Buscar solicitud...">
+        </div>
+    </div>
+
+    <!-- Tabla -->
+    <table id="requestTable">
+        <thead>
+            <tr>
+                <th>Folio</th>
+                <th>Cliente</th>
+                <th>Servicio</th>
+                <th>Fecha</th>
+                <th>Responsable</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Filas de la tabla generadas dinámicamente por JavaScript -->
+        </tbody>
+    </table>
+
+    <!-- Paginación -->
+    <div class="pagination">
+        <button id="prevPage" onclick="changePage(-1)">Anterior</button>
+        <span id="pageInfo">Página 1 de 2</span>
+        <button id="nextPage" onclick="changePage(1)">Siguiente</button>
+    </div>
+
+    <script>
+        // Datos de ejemplo para la tabla
+        const requests = [
+            { folio: '001', status: 'Enviado', client: 'KOSMOS LOGISTICS.', servicio: 'Logística', date: '02/02/2024', responsible: 'Juan Pérez' },
+            { folio: '002', status: 'Enviado', client: 'INDUSTRIAS MARTINREA DE MEXICO.', servicio: 'Transporte', date: '01/02/2024', responsible: 'Pedro Rodríguez' },
+            { folio: '003', status: 'Rechazado', client: 'YOKOHAMA TIRE MEXICO.', servicio: 'Almacenaje', date: '31/01/2024', responsible: 'María López' },
+            { folio: '004', status: 'Enviado', client: 'INDUSTRIAL ACURA', servicio: 'Logística', date: '30/01/2024', responsible: 'Ana García' },
+            { folio: '005', status: 'Pendiente', client: 'PRODUCTOS TAJIN', servicio: 'Transporte', date: '29/01/2024', responsible: 'Luis Hernández' },
+            { folio: '006', status: 'Enviado', client: 'SUMITOMO CORPORATION DE MEXICO', servicio: 'Almacenaje', date: '28/01/2024', responsible: 'Carlos Ruiz' },
+            { folio: '007', status: 'Rechazado', client: 'AUTOSISTEMAS DE TORREON.', servicio: 'Logística', date: '27/01/2024', responsible: 'Sofía Martínez' },
+            { folio: '008', status: 'Enviado', client: 'ISOTANQUES TRANSPORTES Y QUIMICOS INC.', servicio: 'Transporte', date: '26/01/2024', responsible: 'José López' },
+            { folio: '009', status: 'Pendiente', client: 'EXCAVACIONES DIRECCIONALES DE LA LAGUNA', servicio: 'Almacenaje', date: '25/01/2024', responsible: 'Elena Ríos' },
+            { folio: '010', status: 'Enviado', client: 'FIMSA SERVICIOS', servicio: 'Logística', date: '24/01/2024', responsible: 'Jorge Morales' }
+        ];
+
+        const rowsPerPage = 5; // Número de filas por página
+        let currentPage = 1; // Página actual
+        let filteredRequests = null; // Filas filtradas por búsqueda
+
+        /**
+         * Retorna la clase CSS correspondiente al estado de la solicitud.
+         * @param {string} status - Estado de la solicitud.
+         * @returns {string} Clase CSS.
+         */
+        function getStatusClass(status) {
+            switch(status) {
+                case 'Enviado':
+                    return 'status-green';
+                case 'Rechazado':
+                    return 'status-red';
+                case 'Pendiente':
+                    return 'status-yellow';
+                default:
+                    return '';
+            }
+        }
+
+        /**
+         * Muestra las filas de la tabla según la página y los datos proporcionados.
+         * @param {number} page - Número de página actual.
+         * @param {Array} dataToDisplay - Datos a mostrar en la tabla.
+         */
+        function displayTable(page, dataToDisplay) {
+            const start = (page - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+            const tableBody = document.querySelector('#requestTable tbody');
+            tableBody.innerHTML = ''; // Limpiar la tabla existente
+
+            const currentRequests = dataToDisplay.slice(start, end);
+            currentRequests.forEach((request) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${request.folio}</td>
+                    <td>${request.client}</td>
+                    <td>${request.servicio}</td>
+                    <td>${request.date}</td>
+                    <td>${request.responsible}</td>
+                    <td><span class="${getStatusClass(request.status)}">● ${request.status}</span></td>
+                `;
+                // Añadir evento de clic a la fila
+                row.addEventListener('click', () => {
+                    redirectToDetails(request.folio);
+                });
+                tableBody.appendChild(row);
+            });
+
+            const totalPages = Math.ceil(dataToDisplay.length / rowsPerPage);
+            document.getElementById('pageInfo').innerText = `Página ${page} de ${totalPages}`;
+            document.getElementById('prevPage').disabled = page === 1;
+            document.getElementById('nextPage').disabled = page === totalPages;
+        }
+
+        /**
+         * Cambia la página actual en función de la dirección proporcionada.
+         * @param {number} direction - Dirección del cambio de página (-1 para anterior, 1 para siguiente).
+         */
+        function changePage(direction) {
+            const dataToDisplay = filteredRequests || requests;
+            const totalPages = Math.ceil(dataToDisplay.length / rowsPerPage);
+            currentPage += direction;
+            if (currentPage < 1) currentPage = 1;
+            if (currentPage > totalPages) currentPage = totalPages;
+            displayTable(currentPage, dataToDisplay);
+        }
+
+        /**
+         * Redirige a la página de detalles con el folio de la solicitud.
+         * @param {string} folio - Folio de la solicitud.
+         */
+        function redirectToDetails(folio) {
+            window.location.href = `detalles.html?folio=${encodeURIComponent(folio)}`;
+        }
+
+        // Implementación de la funcionalidad de búsqueda
+        document.getElementById('searchInput').addEventListener('input', function(event) {
+            const query = event.target.value.toLowerCase();
+            filteredRequests = requests.filter(request => 
+                request.folio.toLowerCase().includes(query) ||
+                request.client.toLowerCase().includes(query) ||
+                request.servicio.toLowerCase().includes(query) ||
+                request.date.toLowerCase().includes(query) ||
+                request.responsible.toLowerCase().includes(query) ||
+                request.status.toLowerCase().includes(query)
+            );
+
+            // Reiniciar a la primera página
+            currentPage = 1;
+            displayTable(currentPage, filteredRequests);
+        });
+
+        // Inicializar la tabla al cargar la página
+        displayTable(currentPage, requests);
+
+        // Evento de clic para el botón "Nueva Solicitud"
+        document.querySelector('.new-request-btn').addEventListener('click', function() {
+            window.location.href = 'solicitudes.html'; // Redirige a solicitudes.html
+        });
+    </script>
+</body>
+</html>

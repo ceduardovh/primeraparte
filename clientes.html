@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Clientes</title>
+    <link rel="icon" href="icono.jpg" type="image/jpeg">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #800080;
+            --secondary-color: #FFFF00;
+            --background-color: #f5f5f5;
+            --text-color: #333;
+            --text-light: #777;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            display: flex;
+            height: 100vh;
+            margin: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .sidebar {
+            width: 350px;
+            background-color: white;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .search-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .search-bar {
+            padding: 10px;
+            width: 96%;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            background-color: white;
+            font-size: 14px;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+
+        .button-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-button {
+            flex: 1;
+            padding: 12px;
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .action-button:hover {
+            background-color: #6b006b;
+            transform: translateY(-1px);
+        }
+
+        .client-list {
+            flex: 1;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+
+        .client-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #eee;
+            margin-bottom: 8px;
+        }
+
+        .client-item:hover {
+            transform: translateX(5px);
+            box-shadow: var(--shadow);
+        }
+
+        .client-item.selected {
+            border-left: 4px solid var(--primary-color);
+            background: rgba(128, 0, 128, 0.05);
+        }
+
+        .client-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-right: 15px;
+        }
+
+        .client-info h3 {
+            font-size: 15px;
+            margin: 0;
+        }
+
+        .client-info p {
+            font-size: 13px;
+            color: var(--text-light);
+            margin: 0;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 35px;
+            overflow-y: auto;
+        }
+
+        .client-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .client-actions button {
+            padding: 8px 15px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-left: 10px;
+        }
+
+        .client-actions button:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="search-container">
+            <div style="position: relative;">
+                <input type="text" class="search-bar" placeholder="Buscar cliente...">
+                <i class="material-icons search-icon">search</i>
+            </div>
+            <div class="button-container">
+                <button class="action-button" onclick="showClientForm()">
+                    <i class="material-icons" style="margin-right: 4px;">add</i>
+                    Nuevo Cliente
+                </button>
+                <button class="action-button" onclick="goToHome()">
+                    <i class="material-icons" style="margin-right: 4px;">home</i>
+                    Volver a Inicio
+                </button>
+            </div>
+        </div>
+        <div class="client-list">
+            <div class="client-item selected">
+                <div class="client-avatar">K</div>
+                <div class="client-info">
+                    <h3>KOSMOS LOGISTICS</h3>
+                    <p>15 contactos · Última actividad: 2h</p>
+                </div>
+            </div>
+
+            <div class="client-item">
+                <div class="client-avatar">F</div>
+                <div class="client-info">
+                    <h3>FUNDILAG HIERRO</h3>
+                    <p>8 contactos · Última actividad: 5d</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="client-header">
+            <h1>KOSMOS LOGISTICS</h1>
+            <div class="client-actions">
+                <button onclick="editClient()"><i class="material-icons">edit</i> Editar</button>
+                <button onclick="showHistory()"><i class="material-icons">history</i> Historial</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.querySelector('.search-bar').addEventListener('input', function(e) {
+        const term = e.target.value.toLowerCase();
+        document.querySelectorAll('.client-item').forEach(item => {
+            const name = item.querySelector('h3').textContent.toLowerCase();
+            item.style.display = name.includes(term) ? 'flex' : 'none';
+        });
+    });
+
+    function goToHome() {
+        window.location.href = 'index.html'; // Cambia 'index.html' por la ruta correcta a tu página de inicio
+    }
+    </script>
+</body>
+</html>

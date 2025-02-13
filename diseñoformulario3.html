@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sistema Interno de Cotizaciones (Orden Más Claro)</title>
+  <!-- Íconos Material -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    /* RESET */
+    * {
+      box-sizing: border-box;
+      margin: 0; 
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      color: #333;
+    }
+
+    h1, h2 {
+      margin-bottom: 0.5rem;
+    }
+
+    .main-container {
+      display: flex;
+      min-height: 100vh;
+    }
+    /* Barra Lateral */
+    aside {
+      width: 240px;
+      background: #fff;
+      border-right: 1px solid #ccc;
+      padding: 20px;
+    }
+    aside h2 {
+      margin-bottom: 1rem;
+    }
+    .toolbar ul {
+      list-style: none;
+    }
+    .toolbar li {
+      display: flex;
+      align-items: center;
+      padding: 8px 0;
+      cursor: pointer;
+      font-size: 0.95rem;
+      border-bottom: 1px solid #eee;
+      transition: background 0.3s;
+    }
+    .toolbar li:hover {
+      background: #f9f9f9;
+    }
+    .toolbar .material-icons {
+      margin-right: 8px;
+      font-size: 20px;
+      color: #555;
+    }
+
+    /* Contenido Principal */
+    main {
+      flex: 1;
+      padding: 20px;
+      background: #fff;
+    }
+
+    header {
+      margin-bottom: 20px;
+    }
+
+    .section {
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #ddd;
+    }
+    .section h2 {
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+      color: #444;
+    }
+
+    .field-group {
+      margin-bottom: 12px;
+    }
+    .field-group label {
+      display: inline-block;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+    .field-group input,
+    .field-group select,
+    .field-group textarea {
+      width: 100%;
+      padding: 6px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .grid-2cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .notes {
+      height: 100px;
+      resize: none;
+    }
+
+    /* Pequeños ajustes para inputs más pequeños */
+    .small-input {
+      width: 80px;
+      margin-right: 4px;
+    }
+
+    /* Miles, CPM, PPM, Hazmat en fila */
+    .inline-fields {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .inline-fields input[type="checkbox"] {
+      width: auto;
+      transform: scale(1.2);
+      cursor: pointer;
+    }
+
+    /* Routes Tab */
+    .routes-container {
+      background: #fafafa;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 15px;
+    }
+    .routes-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    .routes-row label {
+      font-weight: bold;
+      width: auto;
+    }
+    .routes-row input,
+    .routes-row select {
+      padding: 6px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .routes-row button {
+      padding: 6px 12px;
+      border: 1px solid #ccc;
+      background: #eee;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .routes-row button:hover {
+      background: #ddd;
+    }
+
+    footer {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+<div class="main-container">
+  <!-- Barra Lateral -->
+  <aside>
+    <h2>Opciones</h2>
+    <div class="toolbar">
+      <ul>
+        <li><span class="material-icons">add</span>Crear Nueva Cotización</li>
+        <li><span class="material-icons">content_copy</span>Copiar Cotización</li>
+        <li><span class="material-icons">save</span>Guardar Cotización</li>
+        <li><span class="material-icons">add_circle_outline</span>Agregar Gastos</li>
+        <li><span class="material-icons">print</span>Imprimir Hoja Interna</li>
+        <li><span class="material-icons">calculate</span>Imprimir Comisiones</li>
+        <li><span class="material-icons">picture_as_pdf</span>Imprimir Cotización Cliente</li>
+        <li><span class="material-icons">picture_as_pdf</span>Imprimir Cotización Cliente w/prov</li>
+        <li><span class="material-icons">picture_as_pdf</span>Imprimir Cotización Cliente(Spá)</li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Contenido Principal -->
+  <main>
+    <header>
+      <h1>Sistema Interno de Cotizaciones</h1>
+    </header>
+
+    <!-- 1. ENCABEZADO / INFORMACIÓN GENERAL -->
+    <section class="section">
+      <div class="field-group">
+        <label>Empresa (Company)</label>
+        <input type="text" value="LOOPER, SA DE CV" disabled>
+      </div>
+      <div class="field-group">
+        <label>Sucursal (Branch Office)</label>
+        <input type="text" value="PERFORMER LOGISTICS - TORREON, COAHU" disabled>
+      </div>
+      <div class="grid-2cols">
+        <div>
+          <div class="field-group">
+            <label>Estatus (Status)</label>
+            <select>
+              <option>OPEN</option>
+              <option>CLOSED</option>
+              <option>PENDING</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label>Preparado por (Prepared by)</label>
+            <input type="text" value="CAROLINA GARCIA" disabled>
+          </div>
+        </div>
+        <div>
+          <div class="field-group">
+            <label>Autorizado por (Authorized by)</label>
+            <select>
+              <option>-Select one-</option>
+              <option>Manager</option>
+              <option>Director</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. DATOS DE LA COTIZACIÓN -->
+    <section class="section">
+      <h2>Datos de la Cotización</h2>
+      <div class="grid-2cols">
+        <div>
+          <div class="field-group">
+            <label>Folio</label>
+            <input type="text" value="QPR01457/24" disabled>
+          </div>
+          <div class="field-group">
+            <label>Fecha (Date)</label>
+            <input type="text" value="08/21/2024 10:39" disabled>
+          </div>
+          <div class="field-group">
+            <label>Vendedor (Seller)</label>
+            <select>
+              <option>MANUEL MANCHA</option>
+              <option>Otro vendedor</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label>Servicio (Service)</label>
+            <input type="text" value="SOUTH BOUND" disabled>
+          </div>
+        </div>
+        <div>
+          <div class="field-group">
+            <label>Importación / Modo</label>
+            <select>
+              <option>AIR</option>
+              <option>OCEAN</option>
+              <option>TRUCK</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label>Moneda (Currency)</label>
+            <select>
+              <option>USD</option>
+              <option>EUR</option>
+              <option>MXN</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label>Tipo de Cambio (Ex. Rate Billing)</label>
+            <input type="text" value="1.0000">
+          </div>
+          <div class="field-group">
+            <label>Valor (Value)</label>
+            <input type="text" placeholder="Ej. 5000 USD">
+          </div>
+          <div class="field-group">
+            <label># Embarques (# Shipm.)</label>
+            <input type="number" value="1">
+          </div>
+          <div class="field-group">
+            <label>Incoterm</label>
+            <select>
+              <option>-Select one-</option>
+              <option>EXW</option>
+              <option>FOB</option>
+              <option>CIF</option>
+              <option>DAP</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. INFORMACIÓN DE CLIENTE Y RUTA -->
+    <section class="section">
+      <h2>Información de Cliente y Ruta</h2>
+      <div class="field-group">
+        <label>Cliente (Customer)</label>
+        <input type="text" value="MONTIAC SA DE CV">
+      </div>
+      <div class="field-group">
+        <label>Origen (Origin)</label>
+        <input type="text" value="LAEMPE MÖSSNER SINTO GMBH">
+      </div>
+      <div class="field-group">
+        <label>Origen (País/Estado/Ciudad)</label>
+        <div style="display:flex; gap:5px;">
+          <select class="small-input">
+            <option>GER</option>
+            <option>FRA</option>
+            <option>ESP</option>
+          </select>
+          <select class="small-input">
+            <option>BAR</option>
+            <option>HAM</option>
+            <option>BER</option>
+          </select>
+          <select class="small-input">
+            <option>MEITZENDORF</option>
+            <option>FRANKFURT</option>
+            <option>HAMBURG</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-group">
+        <label>Destino (Destination)</label>
+        <input type="text" value="LAREDO">
+      </div>
+      <div class="field-group">
+        <label>Destino (País/Estado/Ciudad)</label>
+        <div style="display:flex; gap:5px;">
+          <select class="small-input">
+            <option>USA</option>
+            <option>CAN</option>
+            <option>MEX</option>
+          </select>
+          <select class="small-input">
+            <option>TX</option>
+            <option>CA</option>
+            <option>NY</option>
+          </select>
+          <select class="small-input">
+            <option>LAREDO</option>
+            <option>DALLAS</option>
+            <option>HOUSTON</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-group">
+        <label>Tiempo de Tránsito (Time Transit)</label>
+        <input type="text" placeholder="Ej. 2-5 días">
+      </div>
+      <div class="field-group">
+        <label>Peso Total (Total Weight)</label>
+        <input type="number" value="0">
+      </div>
+      <div class="field-group">
+        <label>AOL (Aeropuerto de Origen)</label>
+        <input type="text" value="FRANKFURT - GERMANY">
+      </div>
+      <div class="field-group">
+        <label>AOD (Aeropuerto de Destino)</label>
+        <input type="text" placeholder="Ej. DFW - Dallas">
+      </div>
+      <div class="field-group">
+        <label>Peso Cobrable (Collectible Weight)</label>
+        <input type="number" value="85">
+      </div>
+
+      <!-- MILES, CPM, PPM, HAZMAT -->
+      <div class="field-group">
+        <div class="inline-fields">
+          <label>Miles:</label>
+          <input type="text" placeholder="Ej. 1200" class="small-input">
+          <label>CPM:</label>
+          <input type="text" placeholder="Ej. 0.50" class="small-input">
+          <label>PPM:</label>
+          <input type="text" placeholder="Ej. 0.20" class="small-input">
+          <label>Hazmat:</label>
+          <input type="checkbox">
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. COSTOS Y PRECIOS -->
+    <section class="section">
+      <h2>Costos y Precios</h2>
+      <div class="grid-2cols">
+        <div>
+          <div class="field-group">
+            <label>Costo Total (Total Cost)</label>
+            <input type="text" value="924.00" readonly>
+          </div>
+          <div class="field-group">
+            <label>Utilidad (Profit)</label>
+            <input type="text" value="231.00" readonly>
+          </div>
+          <div class="field-group">
+            <label>Venta (Sales)</label>
+            <input type="text" value="1155.00" readonly>
+          </div>
+        </div>
+        <div>
+          <div class="field-group">
+            <label>Margen (%)</label>
+            <input type="text" value="20.00%" readonly>
+          </div>
+          <div class="field-group">
+            <label>Comisión Promotor (Commission Promoter)</label>
+            <input type="text" value="0.00" readonly>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. NOTAS / CONDICIONES -->
+    <section class="section">
+      <h2>Notas / Condiciones</h2>
+      <textarea class="notes" readonly>
+WOODEN CRATE 60X40X50 85KG
+El importe puede variar debido al tipo de cambio.
+El importe puede variar según el valor del combustible.
+La tarifa está sujeta a disponibilidad, confirme con 24-48 hrs.
+El importe no incluye impuestos.
+La cotización no incluye seguro.
+No incluye maniobras de descarga.
+PERFORMER LOGISTICS no se responsabiliza por causas ajenas...
+      </textarea>
+    </section>
+
+    <!-- 6. ROUTES TAB -->
+    <section class="section">
+      <h2>ROUTES TAB</h2>
+      <div class="routes-container">
+        <div class="routes-row">
+          <label>Origin Country</label>
+          <input type="text" placeholder="Ej. DE (Alemania)">
+          <label>State</label>
+          <input type="text" placeholder="Ej. Hesse">
+          <label>City</label>
+          <input type="text" placeholder="Ej. Frankfurt">
+        </div>
+        <div class="routes-row">
+          <label>Destination Country</label>
+          <input type="text" placeholder="Ej. US (USA)">
+          <label>State</label>
+          <input type="text" placeholder="Ej. Texas">
+          <label>City</label>
+          <input type="text" placeholder="Ej. Laredo">
+        </div>
+        <div class="routes-row">
+          <label>Servicio:</label>
+          <select>
+            <option>-Select one-</option>
+            <option>IMPORTACION</option>
+            <option>EXPORTACION</option>
+            <option>DOMESTICO</option>
+          </select>
+          <button>Get rate tab</button>
+          <label>Vehicle:</label>
+          <input type="text" placeholder="Ej. Truck">
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>Sistema Interno de Cotizaciones - Uso Exclusivo de Personal Autorizado | ©2024 LOOPER, SA DE CV</p>
+    </footer>
+
+  </main>
+</div>
+
+</body>
+</html>

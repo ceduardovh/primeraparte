@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pricing Air Export - Clone</title>
+  <style>
+    /* Reset básico */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff;
+      color: #333;
+      padding: 20px;
+    }
+
+    /* Contenedor principal */
+    .document-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Encabezado / Logo / Título */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+
+    .header-left h1 {
+      font-size: 1.5rem;
+      margin-bottom: 5px;
+    }
+
+    .header-right {
+      text-align: right;
+    }
+
+    /* Sección de datos en columnas (Service Solicitor / Service Provider) */
+    .two-column {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .two-column div {
+      width: 48%;
+    }
+
+    .title-label {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    /* Línea divisoria */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: #ccc;
+      margin: 15px 0;
+    }
+
+    /* Secciones de texto */
+    .section-title {
+      font-weight: bold;
+      margin-top: 20px;
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+    }
+
+    /* Tablas */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+    }
+    table th, table td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      vertical-align: top;
+    }
+    table th {
+      background: #f9f9f9;
+      text-align: left;
+    }
+
+    /* Tabla sin celdas marcadas para la parte de totales / subtotales, etc. */
+    .no-border-table {
+      border: none;
+      margin-bottom: 0;
+    }
+    .no-border-table td {
+      border: none;
+      padding: 4px 0;
+    }
+
+    .subtotal {
+      text-align: right;
+      font-weight: bold;
+    }
+
+    /* Opciones (BA, AA, LH) */
+    .option-title {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .option-block {
+      margin-bottom: 15px;
+    }
+
+    /* Pie de página: datos de banco, contactos, etc. */
+    .footer {
+      margin-top: 20px;
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+    .footer p {
+      margin-bottom: 6px;
+    }
+
+    /* Manejo de “página 2” simulado */
+    .page-break {
+      page-break-before: always; /* para impresión */
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="document-container">
+
+  <!-- ENCABEZADO PRINCIPAL -->
+  <div class="header">
+    <div class="header-left">
+      <!-- Puedes simular el logo “CARGOMIND” con texto, o usar una imagen si la tuvieras -->
+      <h1>CARGOMIND</h1>
+      <p style="font-style: italic; color: #666;">We put a lot of thought in all we do.</p>
+    </div>
+    <div class="header-right">
+      <h2 style="margin-bottom: 5px;">Pricing Air Export</h2>
+      <h2 style="font-weight: normal;">FRA-Q24007324</h2>
+    </div>
+  </div>
+
+  <!-- Primera sección con datos: Service Solicitor / Service Provider -->
+  <div class="two-column">
+    <div>
+      <div class="title-label">Service Solicitor</div>
+      <p>PERFORMER Logistics S.A DE C.V<br>
+         Blvd. Constitucion 1923,<br>
+         Int A Col Fraccionamiento,<br>
+         Palmas San Isidro, Coahuila<br>
+         27104 Torreon, COA<br>
+         Mexico</p>
+    </div>
+    <div style="text-align:right;">
+      <div class="title-label">Service Provider</div>
+      <p>Cargomind (Germany) GmbH<br>
+         Cargo City Süd Gebäude 555A<br>
+         60549 Frankfurt am Main<br>
+         Germany</p>
+      <p>Valid until <strong>28 Aug 2024</strong><br>
+         Date of Issue <strong>21 Aug 2024</strong></p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Transport Details -->
+  <div class="section-title">Transport Details</div>
+  <div class="two-column">
+    <div>
+      <p><strong>Departure Airport</strong><br>FRA - Frankfurt am Main</p>
+      <p><strong>Destination Airport</strong><br>LRD - Laredo</p>
+    </div>
+    <div style="text-align:right;">
+      <p><strong>Place of Acceptance</strong><br>39179 Barleben OT</p>
+      <p><strong>Incoterms</strong><br>EXW Barleben OT</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Shipment Details -->
+  <div class="section-title">Shipment Details</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Pieces</th>
+        <th>Package Type</th>
+        <th>Dimensions</th>
+        <th>Stackable</th>
+        <th>Nature of Goods</th>
+        <th>Weight</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Cases</td>
+        <td>60 x 40 x 50 cm</td>
+        <td>yes</td>
+        <td>GENERAL CARGO / Not restricted</td>
+        <td>85 kg</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="no-border-table">
+    <tbody>
+      <tr>
+        <td>Total</td>
+        <td>1</td>
+        <td>Volume</td>
+        <td>0.12 m³</td>
+      </tr>
+      <tr>
+        <td>Chargeable Weight</td>
+        <td>85 kg</td>
+        <td>Total Weight</td>
+        <td>85 kg</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Local Charges -->
+  <div class="section-title">Local Charges</d

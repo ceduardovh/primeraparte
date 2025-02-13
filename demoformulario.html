@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Modelo de Cotización</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+    }
+
+    .container {
+        width: 95%;
+        margin: auto;
+    }
+
+    header, section, footer {
+        margin-bottom: 20px;
+    }
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    header .company-info {
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+
+    .buttons {
+        margin: 10px 0;
+    }
+
+    .buttons button {
+        margin-right: 5px;
+    }
+
+    .form-group {
+        margin-bottom: 10px;
+    }
+
+    label {
+        font-weight: bold;
+        display: inline-block;
+        width: 200px;
+    }
+
+    input[type="text"], input[type="number"], select, textarea {
+        width: 300px;
+        padding: 5px;
+        box-sizing: border-box;
+    }
+
+    textarea {
+        height: 80px;
+    }
+
+    .flex {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .flex .form-group {
+        width: 50%;
+    }
+
+    .calc-box {
+        border: 1px solid #ccc;
+        padding: 10px;
+    }
+
+    .calc-box .form-group {
+        width: 100%;
+    }
+
+    footer p {
+        font-size: 0.9em;
+        color: #666;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <div class="company-info">
+            Company: LOOPER, SA DE CV<br/>
+            Branch: PERFORMER LOGISTICS - TORREON, COAHU
+        </div>
+        <div class="quote-status">
+            Status: <strong>OPEN</strong><br/>
+            Prepared by: <strong>CAROLINA GARCIA</strong><br/>
+            Authorized by: <select name="authorized_by">
+                <option value="">-Select one-</option>
+                <option value="person1">Persona 1</option>
+            </select>
+        </div>
+    </header>
+
+    <section class="messages">
+        <p><strong>Messages:</strong> </p>
+    </section>
+
+    <section class="buttons">
+        <button>Create New Quote</button>
+        <button>Copy Quote</button>
+        <button>Save Quote</button>
+        <button>Add quote expenses</button>
+        <button>Print Worksheet Quote</button>
+        <button>Print Commissions</button>
+        <button>Print Customer Quote</button>
+        <button>Print Customer Quote w/prov</button>
+        <button>Print Customer Quote(Spa)</button>
+    </section>
+
+    <section class="quote-details">
+        <div class="form-group">
+            <label for="folio">Folio:</label>
+            <input type="text" id="folio" name="folio" value="QPR01457/24"/>
+        </div>
+        <div class="form-group">
+            <label for="date">Date:</label>
+            <input type="text" id="date" name="date" value="08/21/2024 10:39"/>
+        </div>
+        <div class="form-group">
+            <label for="seller">Seller:</label>
+            <input type="text" id="seller" name="seller" value="MANUEL MANCHA"/>
+        </div>
+        <div class="form-group">
+            <label for="service">Service:</label>
+            <input type="text" id="service" name="service" value="SOUTH BOUND"/>
+        </div>
+        <div class="form-group">
+            <label for="import_mode">Importación / Mode:</label>
+            <input type="text" id="import_mode" name="import_mode" value="AIR"/>
+        </div>
+        <div class="form-group">
+            <label for="currency">Currency:</label>
+            <input type="text" id="currency" name="currency" value="USD"/>
+        </div>
+        <div class="form-group">
+            <label for="ex_rate">Ex. Rate Billing:</label>
+            <input type="text" id="ex_rate" name="ex_rate" value="1.0000"/>
+        </div>
+        <div class="form-group">
+            <label for="value">Value:</label>
+            <input type="text" id="value" name="value"/>
+        </div>
+        <div class="form-group">
+            <label for="num_shipment"># Shipm.:</label>
+            <input type="text" id="num_shipment" name="num_shipment"/>
+        </div>
+        <div class="form-group">
+            <label for="incoterm">Incoterm:</label>
+            <input type="text" id="incoterm" name="incoterm"/>
+        </div>
+
+        <div class="form-group">
+            <label for="customer">Customer:</label>
+            <input type="text" id="customer" name="customer" value="MONTIAC SA DE CV"/>
+        </div>
+        <div class="form-group">
+            <label for="origin">Origin:</label>
+            <input type="text" id="origin" name="origin" value="LAEMPE MÖSSNER SINTO GMBH"/>
+        </div>
+        <div class="form-group">
+            <label for="destination">Destination:</label>
+            <input type="text" id="destination" name="destination" value="LAREDO"/>
+        </div>
+        <div class="form-group">
+            <label for="time_transit">Time Transit:</label>
+            <input type="text" id="time_transit" name="time_transit"/>
+        </div>
+        <div class="form-group">
+            <label for="total_weight">Total Weight:</label>
+            <input type="text" id="total_weight" name="total_weight" value="0"/>
+        </div>
+        <div class="form-group">
+            <label for="aol">AOL (Airport of Loading):</label>
+            <input type="text" id="aol" name="aol" value="FRANKFURT - GERMANY"/>
+        </div>
+        <div class="form-group">
+            <label for="collectible_weight">Collectible Weight:</label>
+            <input type="text" id="collectible_weight" name="collectible_weight" value="85 KG"/>
+        </div>
+        <div class="form-group">
+            <label for="freight_line">Freight Line:</label>
+            <input type="text" id="freight_line" name="freight_line" value="WOODEN CRATE 60X40X50 85KG"/>
+        </div>
+
+        <div class="calc-box">
+            <div class="form-group">
+                <label for="total_cost">Total Cost:</label>
+                <input type="text" id="total_cost" name="total_cost" value="924.00"/>
+            </div>
+            <div class="form-group">
+                <label for="profit">Profit:</label>
+                <input type="text" id="profit" name="profit" value="231.00"/>
+            </div>
+            <div class="form-group">
+                <label for="sales">Sales:</label>
+                <input type="text" id="sales" name="sales" value="1155.00"/>
+            </div>
+            <div class="form-group">
+                <label for="price_percentage">Price %:</label>
+                <input type="text" id="price_percentage" name="price_percentage" value="20.00"/>
+            </div>
+            <div class="form-group">
+                <label for="commission_promoter">Commission Promoter (Com.):</label>
+                <input type="text" id="commission_promoter" name="commission_promoter" value="0.00"/>
+            </div>
+            <div class="form-group">
+                <label for="logistics">Logistics:</label>
+                <input type="text" id="logistics" name="logistics"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="notes">Notas / Condiciones:</label>
+            <textarea id="notes" name="notes">
+1. EL IMPORTE PUEDE VARIAR DEBIDO AL TIPO DE CAMBIO.
+2. EL IMPORTE PUEDE VARIAR SEGUN EL VALOR DE COMBUSTIBLE.
+3. LA TARIFA PROPORCIONADA ESTA SUJETA A DISPONIBILIDAD EN LA ZONA, CONFIRMAR CON UN MINIMO DE 24 A 48 HORAS PARA PROGRAMAR EMBARQUE.
+4. EL IMPORTE NO INCLUYE IMPUESTOS.
+5. LA PRESENTE COTIZACION NO INCLUYE NINGÚN TIPO DE SEGURO.
+6. NO INCLUYE MANIOBRAS DE DESCARGA.
+7. PERFORMER LOGISTICS NO RESPONDE POR CAUSAS AJENAS JUSTIFICADAS, RAZONES, MOTIVOS O
+            </textarea>
+        </div>
+    </section>
+
+    <section class="routes">
+        <h2>ROUTES TAB</h2>
+        <div class="flex">
+            <div class="form-group">
+                <label for="origin_country">Origin Country:</label>
+                <select id="origin_country" name="origin_country">
+                    <option value="">-Select one-</option>
+                    <option value="GER">Germany</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="origin_state">State:</label>
+                <input type="text" id="origin_state" name="origin_state" value="BAR"/>
+            </div>
+            <div class="form-group">
+                <label for="origin_city">City:</label>
+                <input type="text" id="origin_city" name="origin_city" value="MEITZENDORF"/>
+            </div>
+            <div class="form-group">
+                <label for="destination_country">Destination Country:</label>
+                <select id="destination_country" name="destination_country">
+                    <option value="">-Select one-</option>
+                    <option value="USA">USA</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="destination_state">State:</label>
+                <input type="text" id="destination_state" name="destination_state" value="TX"/>
+            </div>
+            <div class="form-group">
+                <label for="destination_city">City:</label>
+                <input type="text" id="destination_city" name="destination_city" value="LAREDO"/>
+            </div>
+            <div class="form-group">
+                <label for="route_service">Service:</label>
+                <select id="route_service" name="route_service">
+                    <option value="">-Select one-</option>
+                    <option value="importacion">IMPORTACION</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="route_vehicle">Vehicle:</label>
+                <select id="route_vehicle" name="route_vehicle">
+                    <option value="">-Select one-</option>
+                </select>
+            </div>
+        </div>
+        <button>Get rate tab</button>
+    </section>
+
+    <footer>
+        <p>Este es un ejemplo de un modelo HTML basado en la información provista.</p>
+    </footer>
+</div>
+</body>
+</html>

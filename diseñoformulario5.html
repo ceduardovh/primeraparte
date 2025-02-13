@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pricing Air Export - Clone</title>
+  <style>
+    /* RESET BÁSICO */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff;
+      color: #333;
+      padding: 20px;
+      position: relative;
+    }
+
+    /* FRANJA LATERAL DE PAISES (simulando texto vertical) */
+    .side-bar {
+      position: absolute;
+      top: 20px;
+      left: 0;
+      width: 20px;
+      height: 100%;
+      writing-mode: vertical-rl; /* texto vertical */
+      text-orientation: mixed;
+      font-size: 0.7rem;
+      color: #888;
+      text-align: right;
+      padding: 10px 0;
+      transform: translateX(-90%); /* para simular que queda en el margen */
+    }
+    .side-bar span {
+      display: block;
+      margin-bottom: 50px; /* espaciado entre secciones */
+    }
+
+    .document-container {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    /* CABECERA CON LOGO Y TÍTULOS */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+
+    .header-left h1 {
+      font-size: 1.4rem;
+      margin-bottom: 5px;
+      color: #5B5B5B;
+    }
+
+    .header-left .tagline {
+      font-style: italic;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .header-right {
+      text-align: right;
+    }
+
+    .header-right h2 {
+      margin-bottom: 4px;
+    }
+
+    /* DOS COLUMNAS: SERVICE SOLICITOR / SERVICE PROVIDER */
+    .two-column {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .two-column div {
+      width: 48%;
+    }
+
+    .title-label {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: #ccc;
+      margin: 15px 0;
+    }
+
+    /* TITULOS DE SECCION */
+    .section-title {
+      font-weight: bold;
+      margin-top: 20px;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    /* TABLAS */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+    table th, table td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      vertical-align: top;
+    }
+    table th {
+      background: #f9f9f9;
+      text-align: left;
+    }
+
+    /* TABLAS SIN BORDE (PARA RUTING / COSTOS) */
+    .no-border-table {
+      border: none;
+      margin-bottom: 0;
+    }
+    .no-border-table td {
+      border: none;
+      padding: 4px 0;
+    }
+
+    .subtotal {
+      text-align: right;
+      font-weight: bold;
+    }
+
+    /* OPCIONES DE RUTA (BA, AA, LH) */
+    .option-title {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .option-block {
+      margin-bottom: 15px;
+    }
+
+    /* PIE DE PÁGINA */
+    .footer {
+      margin-top: 20px;
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+    .footer p {
+      margin-bottom: 6px;
+    }
+
+    /* PAGE BREAK (PARA IMPRIMIR) */
+    .page-break {
+      page-break-before: always; /* For print, it forces new page */
+      margin-top: 40px;
+    }
+
+    /* ESTILO LISTAS */
+    ul {
+      margin-left: 20px;
+      margin-top: 8px;
+      margin-bottom: 15px;
+    }
+    li {
+      margin-bottom: 4px;
+    }
+
+    /* PÁGINA 2 - TEXTO */
+    .page-info {
+      text-align: right;
+      margin-bottom: 10px;
+      color: #666;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Franja Lateral de Países -->
+<div class="side-bar">
+  AUSTRIA • CROATIA • CZECH REPUBLIC • GERMANY • HUNGARY • POLAND • ROMANIA • SERBIA • SLOVAKIA • SLOVENIA • SWITZERLAND • UKRAINE • UNITED KINGDOM • CHINA
+</div>
+
+<div class="document-container">
+
+  <!-- ENCABEZADO -->
+  <div class="header">
+    <div class="header-left">
+      <!-- Logo / Título simulado -->
+      <h1>CARGOMIND</h1>
+      <div class="tagline">We put a lot of thought in all we do.</div>
+      <h2 style="margin-top: 15px;">Pricing Air Export</h2>
+    </div>
+    <div class="header-right">
+      <h2 style="margin-bottom: 5px;">FRA-Q24007324</h2>
+    </div>
+  </div>
+
+  <!-- SERVICE SOLICITOR & PROVIDER -->
+  <div class="two-column">
+    <div>
+      <div class="title-label">Service Solicitor</div>
+      <p>PERFORMER Logistics S.A DE C.V<br>
+         Blvd. Constitucion 1923,<br>
+         Int A Col Fraccionamiento,<br>
+         Palmas San Isidro, Coahuila<br>
+         27104 Torreon, COA<br>
+         Mexico</p>
+    </div>
+    <div style="text-align:right;">
+      <div class="title-label">Service Provider</div>
+      <p>Cargomind (Germany) GmbH<br>
+         Cargo City Süd Gebäude 555A<br>
+         60549 Frankfurt am Main<br>
+         Germany</p>
+      <p><strong>Valid until:</strong> 28 Aug 2024<br>
+         <strong>Date of Issue:</strong> 21 Aug 2024</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- TRANSPORT DETAILS -->
+  <div class="section-title">Transport Details</div>
+  <div class="two-column">
+    <div>
+      <p><strong>Departure Airport:</strong><br>FRA - Frankfurt am Main</p>
+      <p><strong>Destination Airport:</strong><br>LRD - Laredo</p>
+    </div>
+    <div style="text-align:right;">
+      <p><strong>Place of Acceptance:</strong><br>39179 Barleben OT</p>
+      <p><strong>Incoterms:</strong><br>EXW Barleben OT</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SHIPMENT DETAILS -->
+  <div class="section-title">Shipment Details</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Pieces</th>
+        <th>Package Type</th>
+        <th>Dimensions</th>
+        <th>Stackable</th>
+        <th>Nature of Goods</th>
+        <th>Weight</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Cases</td>
+        <td>60 x 40 x 50 cm</td>
+        <td>yes</td>
+        <td>GENERAL CARGO / Not restricted</td>
+        <td>85 kg</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Totales de la Carga -->
+  <table class="no-border-table">
+    <tbody>
+      <tr>
+        <td>Total</td>
+        <td>1</td>
+        <td>Volume</td>
+        <td>0.12 m³</td>
+      </tr>
+      <tr>
+        <td>Chargeable Weight</td>
+        <td>85 kg</td>
+        <td>Total Weight</td>
+        <td>85 kg</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- LOCAL CHARGES -->
+  <div class="section-title">Local Charges</div>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:40%">Service Description</th>
+        <th style="width:30%">Calculation</th>
+        <th style="width:30%">Net Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Pick Up</td>
+        <td></td>
+        <td>145.00 EUR</td>
+      </tr>
+      <tr>
+        <td>Airwaybill Fee</td>
+        <td></td>
+        <td>25.00 EUR</td>
+      </tr>
+      <tr>
+        <td>Warehouse Manipulation</td>
+        <td>0.12 EUR/kg * 85kg</td>
+        <td>10.20 EUR</td>
+      </tr>
+      <tr>
+        <td>Security Screening</td>
+        <td></td>
+        <td>35.00 EUR</td>
+      </tr>
+      <tr>
+        <td>Export Customs Monitoring</td>
+        <td></td>
+        <td>25.00 EUR</td>
+      </tr>
+      <tr>
+        <td>AMS Fee</td>
+        <td></td>
+        <td>10.00 EUR</td>
+      </tr>
+      <tr>
+        <td colspan="2" class="subtotal">Subtotal</td>
+        <td><strong>250.20 EUR</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- OPCION BA -->
+  <div class="option-block">
+    <div class="option-title">Option: BA</div>
+    <table class="no-border-table">
+      <tbody>
+        <tr>
+          <td><strong>Routing</strong></td>
+          <td>FRA-LHR-AUS-LRD</td>
+          <td><strong>Transit Time</strong></td>
+          <td>5-6 DAYS</td>
+          <td><strong>Carrier</strong></td>
+          <td>British Airways</td>
+        </tr>
+        <tr>
+          <td><strong>Service Description</strong></td>
+          <td>Airfreight</td>
+          <td><strong>Calculation</strong></td>
+          <td>4.90 EUR/kg * 85kg</td>
+          <td><strong>Net Amount</strong></td>
+          <td>416.50 EUR</td>
+        </tr>
+      </tbody>
+    </table>
+    <p><strong>Total Amount Net (incl. Local Charges):</strong> 666.70 EUR</p>
+  </div>
+
+  <!-- OPCION AA -->
+  <div class="option-block">
+    <div class="option-title">Option: AA</div>
+    <table class="no-border-table">
+      <tbody>
+        <tr>
+          <td><strong>Routing</strong></td>
+          <td>FRA-DFW-LRD</td>
+          <td><strong>Transit Time</strong></td>
+          <td>2-3 DAYS</td>
+          <td><strong>Carrier</strong></td>
+          <td>American Airlines Inc.</td>
+        </tr>
+        <tr>
+          <td><strong>Service Description</strong></td>
+          <td>Airfreight</td>
+          <td><strong>Calculation</strong></td>
+          <td>3.70 EUR/kg * 85kg</td>
+          <td><strong>Net Amount</strong></td>
+          <td>314.50 EUR</td>
+        </tr>
+        <tr>
+          <td><strong>Fuel Surcharge (FSC)</strong></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>12.00 EUR</td>
+        </tr>
+      </tbody>
+    </table>
+    <p><strong>Total Amount Net (incl. Local Charges):</strong> 576.70 EUR</p>
+  </div>
+
+  <!-- SALTO DE PÁGINA -->
+  <div class="page-break"></div>
+
+  <!-- PÁGINA 2 -->
+  <div class="page-info">FRA-Q24007324<br>Page 2/2</div>
+
+  <!-- OPCION LH -->
+  <div class="option-block">
+    <div class="option-title">Option: LH</div>
+    <table class="no-border-table">
+      <tbody>
+        <tr>
+          <td><strong>Routing</strong></td>
+          <td>FRA-DFW-LRD</td>
+          <td><strong>Transit Time</strong></td>
+          <td>2-5 DAYS</td>
+          <td><strong>Carrier</strong></td>
+          <td>Lufthansa Cargo</td>
+        </tr>
+        <tr>
+          <td><strong>Service Description</strong></td>
+          <td>Airfreight</td>
+          <td><strong>Calculation</strong></td>
+          <td>7.55 EUR/kg * 85kg</td>
+          <td><strong>Net Amount</strong></td>
+          <td>641.75 EUR</td>
+        </tr>
+      </tbody>
+    </table>
+    <p><strong>Total Amount Net (incl. Local Charges):</strong> 891.95 EUR</p>
+  </div>
+
+  <!-- TERMS AND CONDITIONS -->
+  <p class="section-title" style="margin-top: 30px;">Terms and Conditions</p>
+  <p>
+    All business undertaken is subject to the latest edition of the German Freight Forwarders’ Standard Terms and Conditions 
+    (<a href="https://www.dslv.org/de/adsp" target="_blank">https://www.dslv.org/de/adsp</a>).
+    International conventions limit the liability subject to the transport mode (air, sea, road, rail). 
+    These limits can be raised by explicit request against payment of a valuation charge. As a preferable solution, 
+    we offer transport insurance for an attractive premium. Goods must be properly packed to withstand cargo handling 
+    and stacking, unless quoted otherwise. This quotation is non-binding until final booking confirmation.
+  </p>
+
+  <p style="margin-top: 15px;"><strong>Not included in this quotation:</strong></p>
+  <ul>
+    <li>Waiting times during loading/unloading</li>
+    <li>Storage charges caused by delays beyond our reasonable control</li>
+    <li>Cancellation Fee after placed booking</li>
+  </ul>
+
+  <p><strong>Export charges for Opening and closing if applicable</strong><br>
+     Shipments exceeding a max. height of 170 cm / Max. 1200 kg or in case of dark-alert additional charges will apply:
+  </p>
+  <ul>
+    <li>Opening and closing of Packages - per wooden case 45,00 €</li>
+    <li>per pallet 35,00 €</li>
+    <li>per carton 15,00 €</li>
+  </ul>
+
+  <!-- DATOS DE EMISIÓN Y CONTACTO -->
+  <div style="margin-top: 20px; display: flex; justify-content: space-between;">
+    <div>
+      <p><strong>Issued by</strong><br>
+      Tommy Yung<br>
+      Cargomind (Germany) GmbH</p>
+    </div>
+    <div style="text-align:right;">
+      <p><strong>Contact Details</strong><br>
+      ☎ +49 69 6809698 44<br>
+      ✉ tommy.yung@cargomind.com</p>
+    </div>
+  </div>
+
+  <!-- FOOTER / BANCO & DATOS LEGALES -->
+  <div class="footer">
+    <p>UniCredit Bank Austria AG | IBAN AT83 1200 0100 1178 8204 | SWIFT/BIC BKAUATWW</p>
+    <p>Head Office Frankfurt/Main · UID DE253556233</p>
+    <p>HRB 79728 Frankfurt/Main · MD T. Mehrhof</p>
+  </div>
+
+</div><!-- /.document-container -->
+
+</body>
+</html>

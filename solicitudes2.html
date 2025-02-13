@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitudes</title>
+    <link rel="icon" href="icono.jpg" type="image/jpeg">
+
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Contenedor del logo */
+        .logo-container {
+            text-align: center; /* Centra el contenido dentro del contenedor */
+            margin-top: 30px; /* Ajusta el margen superior para posicionarlo */
+        }
+
+        .logo-container img {
+            width: 157.82px; /* Tamaño del logo */
+            height: 68.22px;
+            margin: 0 auto; /* Asegura que la imagen esté centrada dentro del contenedor */
+            display: block; /* Para que el `margin: auto` funcione correctamente */
+        }
+
+        /* Estilos para formularios */
+        h2 {
+            text-align: center;
+        }
+
+        select {
+            display: block;
+            margin: 20px auto;
+            padding: 10px;
+            width: 80%;
+            max-width: 300px;
+            font-size: 16px;
+        }
+
+        /* Estilo para centrar formularios */
+        .form-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Estilos del botón Siguiente */
+        .next-btn {
+            display: block;
+            margin: 30px auto;
+            padding: 15px 30px;
+            background-color: purple; /* Color púrpura */
+            color: white; /* Letras blancas */
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .next-btn:hover {
+            background-color: darkviolet; /* Cambia de color al pasar el ratón */
+        }
+    </style>
+    
+</head>
+<body>
+
+    <!-- Contenedor para el logo en la parte superior -->
+    <div class="logo-container">
+        <img src="logo2.png" alt="Logo">
+    </div>
+
+
+    <div class="form-container">
+        <h2>Sucursal</h2>
+        <select id="servicio-select">
+            <option value="">Seleccione Sucursal De Servicio</option>
+            <option value="TORREÓN">PERFORMER LOGISTICS - TORREÓN, COAHUILA</option>
+            <option value="HOUSTON">PERFORMER LOGISTICS - EL PASO, TEXAS</option>
+        </select>
+
+        <!-- Botón Siguiente -->
+        <button class="next-btn" onclick="redirigirPagina()">Siguiente</button>
+    </div>
+
+</body>
+</html>

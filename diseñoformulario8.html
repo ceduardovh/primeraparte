@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Cotización Aérea - Performer Logistics</title>
+  <style>
+    /* RESET BÁSICO */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff;
+      color: #333;
+      padding: 20px;
+      position: relative;
+    }
+
+    /* FRANJA LATERAL (TEXTO VERTICAL) */
+    .side-bar {
+      position: absolute;
+      top: 20px;
+      left: 0;
+      width: 20px;
+      height: 100%;
+      writing-mode: vertical-rl; /* texto vertical */
+      text-orientation: mixed;
+      font-size: 0.7rem;
+      color: #888;
+      text-align: right;
+      padding: 10px 0;
+      transform: translateX(-90%);
+    }
+
+    .side-bar span {
+      display: block;
+      margin-bottom: 50px;
+    }
+
+    .document-container {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    /* ENCABEZADO (LOGO Y TITULOS) */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+
+    .header-left h1 {
+      font-size: 1.4rem;
+      margin-bottom: 5px;
+      color: #5B5B5B;
+    }
+
+    .header-left .tagline {
+      font-style: italic;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .header-right {
+      text-align: right;
+    }
+
+    .header-right h2 {
+      margin-bottom: 4px;
+    }
+
+    /* DOS COLUMNAS (SOLICITANTE / PROVEEDOR) */
+    .two-column {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .two-column div {
+      width: 48%;
+    }
+
+    .title-label {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: #ccc;
+      margin: 15px 0;
+    }
+
+    /* TITULOS DE SECCION */
+    .section-title {
+      font-weight: bold;
+      margin-top: 20px;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    /* TABLAS */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+
+    table th, table td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      vertical-align: top;
+    }
+
+    table th {
+      background: #f9f9f9;
+      text-align: left;
+    }
+
+    /* TABLAS SIN BORDE (PARA RUTAS / COSTOS) */
+    .no-border-table {
+      border: none;
+      margin-bottom: 0;
+    }
+
+    .no-border-table td {
+      border: none;
+      padding: 4px 0;
+    }
+
+    .subtotal {
+      text-align: right;
+      font-weight: bold;
+    }
+
+    /* OPCIONES DE RUTA */
+    .option-title {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .option-block {
+      margin-bottom: 15px;
+    }
+
+    /* PIE DE PÁGINA */
+    .footer {
+      margin-top: 20px;
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+
+    .footer p {
+      margin-bottom: 6px;
+    }
+
+    /* PAGE BREAK (para imprimir) */
+    .page-break {
+      page-break-before: always;
+      margin-top: 40px;
+    }
+
+    /* ESTILO LISTAS */
+    ul {
+      margin-left: 20px;
+      margin-top: 8px;
+      margin-bottom: 15px;
+    }
+
+    li {
+      margin-bottom: 4px;
+    }
+
+    /* SEGUNDA PÁGINA - INFO */
+    .page-info {
+      text-align: right;
+      margin-bottom: 10px;
+      color: #666;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+<!-- FRANJA LATERAL -->
+<div class="side-bar">
+  PERFORMER LOGISTICS
+</div>
+
+<div class="document-container">
+
+  <!-- ENCABEZADO -->
+  <div class="header">
+    <div class="header-left">
+      <!-- Logo / Nombre de la Empresa -->
+      <h1>PERFORMER LOGISTICS</h1>
+      <div class="tagline">Pensamos cada detalle en lo que hacemos.</div>
+      <h2 style="margin-top: 15px;">%%NOMBRE_DEL_SERVICIO%%</h2>
+    </div>
+    <div class="header-right">
+      <h2 style="margin-bottom: 5px;">%%REFERENCIA_COTIZACION%%</h2>
+    </div>
+  </div>
+
+  <!-- DATOS DE SOLICITANTE / PROVEEDOR -->
+  <div class="two-column">
+    <div>
+      <div class="title-label">Solicitante del Servicio</div>
+      <p>%%NOMBRE_SOLICITANTE%%<br>
+         %%DIRECCION_SOLICITANTE_LINEA1%%<br>
+         %%DIRECCION_SOLICITANTE_LINEA2%%<br>
+         %%CIUDAD_ESTADO_SOLICITANTE%%<br>
+         %%PAIS_SOLICITANTE%%</p>
+    </div>
+    <div style="text-align:right;">
+      <div class="title-label">Proveedor (Provider)</div>
+      <p>Performer Logistics<br>
+         %%DIRECCION_PROVEEDOR_LINEA1%%<br>
+         %%DIRECCION_PROVEEDOR_LINEA2%%<br>
+         %%CIUDAD_ESTADO_PROVEEDOR%%<br>
+         %%PAIS_PROVEEDOR%%</p>
+      <p><strong>Válido hasta:</strong> %%VALIDO_HASTA%%<br>
+         <strong>Fecha de Emisión:</strong> %%FECHA_EMISION%%</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- DETALLES DE TRANSPORTE -->
+  <div class="section-title">Detalles de Transporte</div>
+  <div class="two-column">
+    <div>
+      <p><strong>Aeropuerto de Salida:</strong><br>%%AEROPUERTO_SALIDA%%</p>
+      <p><strong>Aeropuerto de Destino:</strong><br>%%AEROPUERTO_DESTINO%%</p>
+    </div>
+    <div style="text-align:right;">
+      <p><strong>Lugar de Recepción (Place of Acceptance):</strong><br>%%LUGAR_RECEPCION%%</p>
+      <p><strong>Incoterms:</strong><br>%%INCOTERMS%%</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- DETALLES DEL ENVÍO -->
+  <div class="section-title">Detalles del Envío</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Piezas</th>
+        <th>Tipo de Embalaje</th>
+        <th>Dimensiones</th>
+        <th>Apilable (Stackable)</th>
+        <th>Naturaleza de la Mercancía</th>
+        <th>Peso</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>%%PIEZAS%%</td>
+        <td>%%TIPO_EMBALAJE%%</td>
+        <td>%%DIMENSIONES%%</td>
+        <td>%%APILABLE%%</td>
+        <td>%%NATURALEZA_MERCANCIA%%</td>
+        <td>%%PESO_MERCANCIA%%</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- TOTALES DE LA CARGA -->
+  <table class="no-border-table">
+    <tbody>
+      <tr>
+        <td>Total</td>
+        <td>%%TOTAL_PIEZAS%%</td>
+        <td>Volumen</td>
+        <td>%%VOLUMEN%%</td>
+      </tr>
+      <tr>
+        <td>Peso Cobrable</td>
+        <td>%%PESO_COBRABLE%%</td>
+        <td>Peso Total</td>
+        <td>%%PESO_TOTAL%%</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- CARGOS LOCALES -->
+  <div class="section-title">Cargos Locales</div>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:40%">Descripción del Servicio</th>
+        <th style="width:30%">Cálculo</th>
+        <th style="width:30%">Monto Neto</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Repite estas filas según tus cargos locales -->
+      <tr>
+        <td>%%DESCRIPCION_SERVICIO1%%</td>
+        <td>%%CALCULO_SERVICIO1%%</td>
+        <td>%%MONTO_SERVICIO1%%</td>
+      </tr>
+      <tr>
+        <td>%%DESCRIPCION_SERVICIO2%%</td>
+        <td>%%CALCULO_SERVICIO2%%</td>
+        <td>%%MONTO_SERVICIO2%%</td>
+      </tr>
+      <!-- ... -->
+      <tr>
+        <td colspan="2" class="subtotal">Subtotal</td>
+        <td><strong>%%SUBTOTAL_CARGOS_LOCALES%%</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- OPCIONES DE RUTA (EJEMPLO) -->
+  <div class="option-block">
+    <div class="option-title">Opción: %%CODIGO_OPCION%%</div>
+    <table class="no-border-table">
+      <tbody>
+        <tr>
+          <td><strong>Ruta</strong></td>
+          <td>%%RUTA%%</td>
+          <td><strong>Tiempo de Tránsito</strong></td>
+          <td>%%TIEMPO_TRANSITO%%</td>
+          <td><strong>Aerolínea (Carrier)</strong></td>
+          <td>%%AEROLINEA%%</td>
+        </tr>
+        <tr>
+          <td><strong>Descripción del Servicio</strong></td>
+          <td>%%DESCRIPCION_SERVICIO%%</td>
+          <td><strong>Cálculo</strong></td>
+          <td>%%CALCULO%%</td>
+          <td><strong>Monto Neto</strong></td>
+          <td>%%MONTO_NETO%%</td>
+        </tr>
+        <tr>
+          <td><strong>Recargo Combustible (FSC)</strong></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>%%RECARGO_COMBUSTIBLE%%</td>
+        </tr>
+      </tbody>
+    </table>
+    <p><strong>Monto Total Neto (incl. Cargos Locales):</strong> %%MONTO_TOTAL_NETO%%</p>
+  </div>
+
+  <!-- Agrega más “option-block” si tienes más rutas -->
+
+  <!-- SALTO DE PÁGINA -->
+  <div class="page-break"></div>
+
+  <!-- PÁGINA 2 -->
+  <div class="page-info">%%REFERENCIA_COTIZACION%%<br>Página 2/2</div>
+
+  <!-- Más bloques de opción, si lo requieres -->
+
+  <!-- TÉRMINOS Y CONDICIONES -->
+  <p class="section-title" style="margin-top: 30px;">Términos y Condiciones</p>
+  <p>
+    %%TERMINOS_CONDICIONES%%
+  </p>
+
+  <p style="margin-top: 15px;"><strong>No incluido en esta cotización:</strong></p>
+  <ul>
+    <li>%%NO_INCLUIDO1%%</li>
+    <li>%%NO_INCLUIDO2%%</li>
+    <li>%%NO_INCLUIDO3%%</li>
+  </ul>
+
+  <p><strong>Explicaciones Adicionales</strong><br>
+     %%EXPLICACIONES_ADICIONALES%%
+  </p>
+  <ul>
+    <li>%%EXPLICACION_ITEM1%%</li>
+    <li>%%EXPLICACION_ITEM2%%</li>
+    <li>%%EXPLICACION_ITEM3%%</li>
+  </ul>
+
+  <!-- DATOS DE EMISIÓN Y CONTACTO -->
+  <div style="margin-top: 20px; display: flex; justify-content: space-between;">
+    <div>
+      <p><strong>Emitido por</strong><br>
+      %%EMITIDO_POR_NOMBRE%%<br>
+      %%EMITIDO_POR_EMPRESA%%</p>
+    </div>
+    <div style="text-align:right;">
+      <p><strong>Detalles de Contacto</strong><br>
+      ☎ %%NUMERO_TELEFONO%%<br>
+      ✉ %%CORREO_ELECTRONICO%%</p>
+    </div>
+  </div>
+
+  <!-- DATOS BANCARIOS / LEGALES -->
+  <div class="footer">
+    <p>%%NOMBRE_BANCO%% | IBAN %%IBAN%% | SWIFT/BIC %%SWIFT%%</p>
+    <p>Oficina Principal %%OFICINA_PRINCIPAL%% · UID %%UID%%</p>
+    <p>%%INFO_HRB%% · Dir. General %%DIRECTOR_GENERAL%%</p>
+  </div>
+
+</div><!-- /.document-container -->
+
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles de la Solicitud</title>
+    <link rel="icon" href="icono.jpg" type="image/jpeg">
+
+    <!-- Incluir Google Fonts para una fuente más moderna -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f5f5f5; /* Fondo claro */
+        }
+
+        /* Contenedor principal */
+        .container {
+            max-width: 800px;
+            margin: 100px auto 50px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Título */
+        .container h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #800080;
+        }
+
+        /* Detalles de la solicitud */
+        .detail {
+            margin-bottom: 20px;
+        }
+
+        .detail strong {
+            display: inline-block;
+            width: 150px;
+            color: #333;
+        }
+
+        /* Botón de regreso */
+        .back-button {
+            display: block;
+            margin: 30px auto 0;
+            background-color: #800080;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+            text-align: center;
+            width: 150px;
+        }
+
+        .back-button:hover {
+            background-color: #6b006b;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container {
+                margin: 80px 20px 30px;
+                padding: 20px;
+            }
+
+            .container h1 {
+                font-size: 24px;
+            }
+
+            .detail strong {
+                width: 100px;
+            }
+
+            .back-button {
+                width: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Contenedor principal -->
+    <div class="container">
+        <h1>Detalles de la Solicitud</h1>
+        <div class="detail"><strong>Folio:</strong> <span id="detalleFolio"></span></div>
+        <div class="detail"><strong>Cliente:</strong> <span id="detalleCliente"></span></div>
+        <div class="detail"><strong>Servicio:</strong> <span id="detalleServicio"></span></div>
+        <div class="detail"><strong>Fecha:</strong> <span id="detalleFecha"></span></div>
+        <div class="detail"><strong>Responsable:</strong> <span id="detalleResponsable"></span></div>
+        <div class="detail"><strong>Estado:</strong> <span id="detalleEstado"></span></div>
+
+        <!-- Botón de regreso -->
+        <button class="back-button" onclick="goBack()">Regresar</button>
+    </div>
+
+    <script>
+        // Datos de ejemplo para la tabla
+        const requests = [
+            { folio: '001', status: 'Enviado', client: 'KOSMOS LOGISTICS.', servicio: 'Logística', date: '02/02/2024', responsible: 'Juan Pérez' },
+            { folio: '002', status: 'Enviado', client: 'INDUSTRIAS MARTINREA DE MEXICO.', servicio: 'Transporte', date: '01/02/2024', responsible: 'Pedro Rodríguez' },
+            { folio: '003', status: 'Rechazado', client: 'YOKOHAMA TIRE MEXICO.', servicio: 'Almacenaje', date: '31/01/2024', responsible: 'María López' },
+            { folio: '004', status: 'Enviado', client: 'INDUSTRIAL ACURA', servicio: 'Logística', date: '30/01/2024', responsible: 'Ana García' },
+            { folio: '005', status: 'Pendiente', client: 'PRODUCTOS TAJIN', servicio: 'Transporte', date: '29/01/2024', responsible: 'Luis Hernández' },
+            { folio: '006', status: 'Enviado', client: 'SUMITOMO CORPORATION DE MEXICO', servicio: 'Almacenaje', date: '28/01/2024', responsible: 'Carlos Ruiz' },
+            { folio: '007', status: 'Rechazado', client: 'AUTOSISTEMAS DE TORREON.', servicio: 'Logística', date: '27/01/2024', responsible: 'Sofía Martínez' },
+            { folio: '008', status: 'Enviado', client: 'ISOTANQUES TRANSPORTES Y QUIMICOS INC.', servicio: 'Transporte', date: '26/01/2024', responsible: 'José López' },
+            { folio: '009', status: 'Pendiente', client: 'EXCAVACIONES DIRECCIONALES DE LA LAGUNA', servicio: 'Almacenaje', date: '25/01/2024', responsible: 'Elena Ríos' },
+            { folio: '010', status: 'Enviado', client: 'FIMSA SERVICIOS', servicio: 'Logística', date: '24/01/2024', responsible: 'Jorge Morales' }
+        ];
+
+        /**
+         * Obtiene el parámetro 'folio' de la URL.
+         * @returns {string|null} Valor del parámetro 'folio' o null si no existe.
+         */
+        function getFolioFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('folio');
+        }
+
+        /**
+         * Busca la solicitud correspondiente al folio.
+         * @param {string} folio - Folio de la solicitud.
+         * @returns {Object|null} Objeto de la solicitud o null si no se encuentra.
+         */
+        function findRequestByFolio(folio) {
+            return requests.find(request => request.folio === folio) || null;
+        }
+
+        /**
+         * Muestra los detalles de la solicitud en el HTML.
+         * @param {Object} request - Objeto de la solicitud.
+         */
+        function displayRequestDetails(request) {
+            if (!request) {
+                alert('Solicitud no encontrada.');
+                return;
+            }
+
+            document.getElementById('detalleFolio').innerText = request.folio;
+            document.getElementById('detalleCliente').innerText = request.client;
+            document.getElementById('detalleServicio').innerText = request.servicio;
+            document.getElementById('detalleFecha').innerText = request.date;
+            document.getElementById('detalleResponsable').innerText = request.responsible;
+            document.getElementById('detalleEstado').innerText = request.status;
+        }
+
+        /**
+         * Maneja la carga de la página y muestra los detalles si el folio es válido.
+         */
+        function init() {
+            const folio = getFolioFromURL();
+            if (!folio) {
+                alert('No se proporcionó un folio.');
+                return;
+            }
+
+            const request = findRequestByFolio(folio);
+            displayRequestDetails(request);
+        }
+
+        /**
+         * Regresa a la página anterior.
+         */
+        function goBack() {
+            window.history.back();
+        }
+
+        // Inicializar al cargar la página
+        window.onload = init;
+    </script>
+</body>
+</html>

@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  
+  <style>
+    /* RESET BÁSICO */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      color: #333;
+      margin: 20px;
+    }
+
+    h1, h2 {
+      margin-bottom: 0.5rem;
+    }
+
+    /* CONTENEDOR PRINCIPAL (2 Columnas: Formulario | Vista Previa) */
+    .main-container {
+      display: flex;
+      gap: 20px;
+      justify-content: center; /* centra ambas columnas en la pantalla */
+    }
+
+    /* Secciones en tamaño A4 */
+    .form-container, .preview-container {
+      width: 210mm;
+      height: 297mm;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 20px;
+      overflow: auto; /* scroll si excede 297mm */
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    /* ----------- ESTILOS DEL FORMULARIO ----------- */
+    .form-container h1 {
+      margin-bottom: 1rem;
+    }
+    .form-container label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    .form-container input[type="text"],
+    .form-container input[type="date"],
+    .form-container textarea,
+    .form-container select {
+      width: 100%;
+      padding: 6px;
+      margin-top: 4px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .form-container button {
+      margin-top: 15px;
+      padding: 8px 16px;
+      border: 1px solid #ccc;
+      background: #eee;
+      cursor: pointer;
+      transition: background 0.3s;
+      border-radius: 4px;
+    }
+    .form-container button:hover {
+      background: #ddd;
+    }
+
+    /* ----------- ESTILOS DE LA VISTA PREVIA ----------- */
+    .preview-container {
+      position: relative;
+    }
+
+    /* Barra lateral vertical (opcional) */
+    .side-bar {
+      position: absolute;
+      top: 20px;
+      left: 0;
+      width: 20px;
+      height: 100%;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      font-size: 0.7rem;
+      color: #888;
+      text-align: right;
+      padding: 10px 0;
+      transform: translateX(-90%);
+    }
+
+    .document-container {
+      position: relative;
+      margin-left: 30px; /* espacio para side-bar */
+      padding-right: 10px;
+    }
+
+    /* ENCABEZADO */
+    .header {
+      display: flex;             /* Para alinear en la misma línea */
+      justify-content: space-between;
+      align-items: flex-start;   /* Alinea la parte superior de las imágenes */
+      margin-bottom: 20px;
+    }
+
+    /* Logo a la izquierda */
+    .header-left img {
+      width: 180px; 
+      height: auto;
+      display: block;
+    }
+
+    /* Aquí ya no tenemos slogan, solo el Folio (u otro texto) a la derecha */
+    .header-right h2 {
+      margin: 0;
+      text-align: right;
+    }
+
+    /* Secciones de 2 columnas (Solicitante, Proveedor, etc.) */
+    .two-column {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .two-column > div {
+      width: 48%;
+    }
+
+    .title-label {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: #ccc;
+      margin: 15px 0;
+    }
+    .section-title {
+      font-weight: bold;
+      margin-top: 20px;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+    table th, table td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      vertical-align: top;
+    }
+    table th {
+      background: #f9f9f9;
+      text-align: left;
+    }
+    .no-border-table {
+      border: none;
+      margin-bottom: 0;
+    }
+    .no-border-table td {
+      border: none;
+      padding: 4px 0;
+    }
+    .footer {
+      margin-top: 20px;
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+    .subtotal {
+      text-align: right;
+      font-weight: bold;
+    }
+    .option-title {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .option-block {
+      margin-bottom: 15px;
+    }
+    .page-break {
+      page-break-before: always;
+      margin-top: 40px;
+    }
+    .page-info {
+      text-align: right;
+      margin-bottom: 10px;
+      color: #666;
+      font-size: 0.9rem;
+    }
+    ul {
+      margin-left: 20px;
+      margin-top: 8px;
+      margin-bottom: 15px;
+    }
+    li {
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="main-container">
+
+  <!-- Columna izquierda: FORMULARIO A4 -->
+  <div class="form-container">
+    <h1>Formulario de Cotización</h1>
+
+    <!-- DATOS GENERALES -->
+    <label for="servicio">Nombre del Servicio (Ej. Cotización Aérea)</label>
+    <input type="text" id="servicio" placeholder="Ej. Cotización Aérea" />
+
+    <label for="folio">Referencia de Cotización (Folio)</label>
+    <input type="text" id="folio" placeholder="Ej. FRA-Q24007324" />
+
+    <label for="validoHasta">Válido hasta (Fecha)</label>
+    <input type="date" id="validoHasta" />
+
+    <label for="fechaEmision">Fecha de Emisión</label>
+    <input type="date" id="fechaEmision" />
+
+    <!-- DETALLES DE TRANSPORTE -->
+    <label for="aeropuertoSalida">Aeropuerto de Salida</label>
+    <input type="text" id="aeropuertoSalida" placeholder="Ej. FRA - Frankfurt" />
+
+    <label for="aeropuertoDestino">Aeropuerto de Destino</label>
+    <input type="text" id="aeropuertoDestino" placeholder="Ej. LRD - Laredo" />
+
+    <label for="lugarRecepcion">Lugar de Recepción</label>
+    <input type="text" id="lugarRecepcion" placeholder="Ej. 39179 Barleben OT" />
+
+    <label for="incoterms">Incoterms</label>
+    <input type="text" id="incoterms" placeholder="Ej. EXW Barleben OT" />
+
+    <!-- DETALLES DEL ENVÍO -->
+    <label for="piezas">Número de Piezas</label>
+    <input type="text" id="piezas" placeholder="Ej. 1" />
+
+    <label for="tipoEmbalaje">Tipo de Embalaje</label>
+    <input type="text" id="tipoEmbalaje" placeholder="Ej. Cases" />
+
+    <label for="dimensiones">Dimensiones</label>
+    <input type="text" id="dimensiones" placeholder="Ej. 60 x 40 x 50 cm" />
+
+    <label for="apilable">Apilable (Stackable)</label>
+    <input type="text" id="apilable" placeholder="Ej. sí / no" />
+
+    <label for="naturalezaMercancia">Naturaleza de la Mercancía</label>
+    <input type="text" id="naturalezaMercancia" placeholder="Ej. GENERAL CARGO / Not restricted" />
+
+    <label for="pesoMercancia">Peso (kg)</label>
+    <input type="text" id="pesoMercancia" placeholder="Ej. 85 kg" />
+
+    <label for="volumen">Volumen</label>
+    <input type="text" id="volumen" placeholder="Ej. 0.12 m³" />
+
+    <label for="pesoCobrable">Peso Cobrable (Chargeable Weight)</label>
+    <input type="text" id="pesoCobrable" placeholder="Ej. 85 kg" />
+
+    <!-- BOTÓN -->
+    <button type="button" onclick="generarVistaPrevia()">Generar Vista Previa</button>
+  </div>
+
+  <!-- Columna derecha: VISTA PREVIA A4 -->
+  <div class="preview-container">
+    <div class="side-bar" id="sideBar">PERFORMER LOGISTICS</div>
+
+    <div class="document-container" id="docContainer">
+      <!-- ENCABEZADO con logo a la izquierda, sin slogan a la derecha -->
+      <div class="header">
+        <div class="header-left">
+          <!-- Logo de la empresa -->
+          <img src="logo2.png" alt="Performer Logistics">
+          <!-- Aquí mostramos el nombre del servicio -->
+          <h2 id="previewServicio" style="margin-top: 10px;"></h2>
+        </div>
+        <div class="header-right">
+          <!-- Folio (u otro texto) -->
+          <h2 id="previewFolio" style="margin-bottom: 5px;"></h2>
+        </div>
+      </div>
+
+      <!-- DATOS DE EJEMPLO: SOLICITANTE / PROVEEDOR -->
+      <div class="two-column">
+        <div>
+          <div class="title-label">Solicitante del Servicio</div>
+          <p>
+            (Ejemplo)<br>
+            Nombre del Cliente<br>
+            Dirección del Cliente<br>
+            Ciudad/Estado<br>
+            País
+          </p>
+        </div>
+        <div style="text-align:right;">
+          <div class="title-label">Proveedor</div>
+          <p>
+            Performer Logistics<br>
+            Dirección Performer<br>
+            Ciudad Estado<br>
+            País
+          </p>
+          <p>
+            <strong>Válido hasta:</strong> <span id="previewValidoHasta"></span><br>
+            <strong>Fecha de Emisión:</strong> <span id="previewFechaEmision"></span>
+          </p>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- DETALLES DE TRANSPORTE -->
+      <div class="section-title">Detalles de Transporte</div>
+      <div class="two-column">
+        <div>
+          <p><strong>Aeropuerto de Salida:</strong><br><span id="previewAeropuertoSalida"></span></p>
+          <p><strong>Aeropuerto de Destino:</strong><br><span id="previewAeropuertoDestino"></span></p>
+        </div>
+        <div style="text-align:right;">
+          <p><strong>Lugar de Recepción:</strong><br><span id="previewLugarRecepcion"></span></p>
+          <p><strong>Incoterms:</strong><br><span id="previewIncoterms"></span></p>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- DETALLES DEL ENVÍO (TABLA) -->
+      <div class="section-title">Detalles del Envío</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Piezas</th>
+            <th>Tipo de Embalaje</th>
+            <th>Dimensiones</th>
+            <th>Apilable</th>
+            <th>Naturaleza Mercancía</th>
+            <th>Peso</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td id="previewPiezas"></td>
+            <td id="previewTipoEmbalaje"></td>
+            <td id="previewDimensiones"></td>
+            <td id="previewApilable"></td>
+            <td id="previewNaturalezaMercancia"></td>
+            <td id="previewPesoMercancia"></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="no-border-table">
+        <tbody>
+          <tr>
+            <td>Total</td>
+            <td id="previewTotalPiezas"></td>
+            <td>Volumen</td>
+            <td id="previewVolumen"></td>
+          </tr>
+          <tr>
+            <td>Peso Cobrable</td>
+            <td id="previewPesoCobrable"></td>
+            <td>Peso Total</td>
+            <td id="previewPesoTotal"></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- FOOTER (DATOS BANCARIOS O LEGALES) -->
+      <div class="footer">
+        <p>Aquí puedes colocar datos bancarios, direcciones legales, etc.</p>
+      </div>
+    </div><!-- /.document-container -->
+  </div><!-- /.preview-container -->
+
+</div><!-- /.main-container -->
+
+<script>
+  function generarVistaPrevia() {
+    // Obtener valores del formulario
+    const servicio = document.getElementById('servicio').value;
+    const folio = document.getElementById('folio').value;
+    const validoHasta = document.getElementById('validoHasta').value;
+    const fechaEmision = document.getElementById('fechaEmision').value;
+
+    const aeropuertoSalida = document.getElementById('aeropuertoSalida').value;
+    const aeropuertoDestino = document.getElementById('aeropuertoDestino').value;
+    const lugarRecepcion = document.getElementById('lugarRecepcion').value;
+    const incoterms = document.getElementById('incoterms').value;
+
+    const piezas = document.getElementById('piezas').value;
+    const tipoEmbalaje = document.getElementById('tipoEmbalaje').value;
+    const dimensiones = document.getElementById('dimensiones').value;
+    const apilable = document.getElementById('apilable').value;
+    const naturalezaMercancia = document.getElementById('naturalezaMercancia').value;
+    const pesoMercancia = document.getElementById('pesoMercancia').value;
+    const volumen = document.getElementById('volumen').value;
+    const pesoCobrable = document.getElementById('pesoCobrable').value;
+
+    // 1) Mostrar el Nombre del Servicio
+    document.getElementById('previewServicio').textContent = servicio;
+
+    
+    document.getElementById('previewFolio').textContent = folio;
+
+    
+    document.getElementById('previewValidoHasta').textContent = validoHasta;
+    document.getElementById('previewFechaEmision').textContent = fechaEmision;
+
+    
+    document.getElementById('previewAeropuertoSalida').textContent = aeropuertoSalida;
+    document.getElementById('previewAeropuertoDestino').textContent = aeropuertoDestino;
+    document.getElementById('previewLugarRecepcion').textContent = lugarRecepcion;
+    document.getElementById('previewIncoterms').textContent = incoterms;
+
+    
+    document.getElementById('previewPiezas').textContent = piezas;
+    document.getElementById('previewTipoEmbalaje').textContent = tipoEmbalaje;
+    document.getElementById('previewDimensiones').textContent = dimensiones;
+    document.getElementById('previewApilable').textContent = apilable;
+    document.getElementById('previewNaturalezaMercancia').textContent = naturalezaMercancia;
+    document.getElementById('previewPesoMercancia').textContent = pesoMercancia;
+
+    
+    document.getElementById('previewTotalPiezas').textContent = piezas;
+    document.getElementById('previewVolumen').textContent = volumen;
+    document.getElementById('previewPesoCobrable').textContent = pesoCobrable;
+    document.getElementById('previewPesoTotal').textContent = pesoMercancia;
+  }
+</script>
+
+</body>
+</html>
